@@ -1,9 +1,8 @@
-# issLab2026
- Laboratorio di <b>Ingegneria dei Sistemi Software</b> a.a. 2025/2026 di Davide Chirichella 0001222371\
+# iss-2026-project
+ Laboratorio di <b>Ingegneria dei Sistemi Software</b> a.a. 2025/2026 di Chirichella Davide - matricola 0001222731\
  Documentazione disponibile [qui](https://chirichexe.github.io/iss-2026-project/)
 
  [Testo di riferimento:](https://anatali.github.io/issLab2026/_static/docs/Protobook.pdf)
- <!-- comment: [ancora personalizzata] -->
 
  <h2 id="ParteA">Parte A: Dai programmi ai Sistemi a Microservizi</h2>
 
