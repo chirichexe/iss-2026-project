@@ -45,28 +45,32 @@ R2  L’utente umano deve poter:
 
 <h2>Requirement analysis</h2>
 
-1. Cosa intende il committente per <b>Cella</b>?
-
-Dopo aver parlato col committente si formalizza il seguente <a href="https://github.com/chirichexe/iss-2026-project/tree/main/ConwayLife/Sprint1/conway26Java/src/main/java/conway/domain/ICell.java">modello</a>.
-
-2. Cosa intende il committente per <b>griglia</b>?
-
-Dopo aver parlato col committente si formalizza il seguente <a href="https://github.com/chirichexe/iss-2026-project/tree/main/ConwayLife/Sprint1/conway26Java/src/main/java/conway/domain/IGrid.java">modello</a>.
-
-3. Cosa intende il committente per <b>Life</b>?
-
-Dopo aver parlato col committente si formalizza il seguente <a href="https://github.com/chirichexe/iss-2026-project/tree/main/ConwayLife/Sprint1/conway26Java/src/main/java/conway/domain/LifeInterface.java">modello</a>.
-
-
+<ul>
+    <li>Cosa intende il committente per <b>Cella</b>?</li>
+    <ul>
+        <li>Dopo aver parlato col committente si formalizza il seguente <a href="https://github.com/chirichexe/iss-2026-project/tree/main/ConwayLife/Sprint1/conway26Java/src/main/java/conway/domain/ICell.java">modello</a>.</li>
+    </ul>
+    <li>Cosa intende il committente per <b>Griglia</b>?</li>
+    <ul>
+        <li>Dopo aver parlato col committente si formalizza il seguente <a href="https://github.com/chirichexe/iss-2026-project/tree/main/ConwayLife/Sprint1/conway26Java/src/main/java/conway/domain/IGrid.java">modello</a>.</li>
+    </ul>
+    <li>Cosa intende il committente per <b>Life</b>?</li>
+    <ul>
+        <li>Dopo aver parlato col committente si formalizza il seguente <a href="https://github.com/chirichexe/iss-2026-project/tree/main/ConwayLife/Sprint1/conway26Java/src/main/java/conway/domain/LifeInterface.java">modello</a>.</li>
+    </ul>
+</ul>
 
 <h2>Problem analysis</h2>
 <img src="./img/UML.jpg" alt="UML">
 
 <h2>Test plans</h2> 
 
-Si è prodotto il seguente piano di Test per <a href="https://github.com/chirichexe/iss-2026-project/blob/main/ConwayLife/Sprint1/conway26Java/src/main/java/test/CellTest.java"></a><b>Cella</b>
-Si è prodotto il seguente piano di Test per <a href="https://github.com/chirichexe/iss-2026-project/blob/main/ConwayLife/Sprint1/conway26Java/src/main/java/test/GridTest.java"></a><b>Griglia</b>
-Si è prodotto il seguente piano di Test per <a href="https://github.com/chirichexe/iss-2026-project/blob/main/ConwayLife/Sprint1/conway26Java/src/main/java/test/LifeTest.java"></a><b>Life</b>
+<ul>
+
+    <li>Si è prodotto il seguente piano di Test per <a href="https://github.com/chirichexe/iss-2026-project/blob/main/ConwayLife/Sprint1/conway26Java/src/main/java/test/CellTest.java"><b>Cella</b></a> </li>
+    <li>Si è prodotto il seguente piano di Test per <a href="https://github.com/chirichexe/iss-2026-project/blob/main/ConwayLife/Sprint1/conway26Java/src/main/java/test/GridTest.java"><b>Griglia</b></a> </li>
+    <li>Si è prodotto il seguente piano di Test per <a href="https://github.com/chirichexe/iss-2026-project/blob/main/ConwayLife/Sprint1/conway26Java/src/main/java/test/LifeTest.java"><b>Life</b></a> </li>
+</ul>
 
 <h2>Project</h2> 
  
@@ -76,7 +80,15 @@ Si è prodotto il seguente piano di Test per <a href="https://github.com/chirich
 
 <h2>Deployment</h2> 
 
- 
+Il sistema è distribuito tramite Docker (mediante la definizione di un <a href="https://github.com/chirichexe/iss-2026-project/blob/main/ConwayLife/Sprint3/conway26GuiHtml/Dockerfile">Dockerfile</a> e un <a href="https://github.com/chirichexe/iss-2026-project/blob/main/ConwayLife/Sprint3/conway26GuiHtml/docker-compose.yml">docker-compose.yml</a> per la gestione multicontainer) per garantire la coerenza dell'ambiente di esecuzione:
+
+<pre><code>
+docker build -t conway-sprint3 .
+docker tag conway-sprint3:latest gui26html:1.0
+docker compose up -d
+</code></pre>
+
+
 <h2>Maintenance</h2> 
  
 <!-- USEFUL
