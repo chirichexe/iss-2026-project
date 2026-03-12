@@ -4,7 +4,7 @@
 
 FROM eclipse-temurin:17.0.5_8-jre-focal AS builder
 ## ADD extracts the tar
-ADD ../build/distributions/conway26GuiHtml-1.0.tar /
+ADD build/distributions/conway26GuiHtml-1.0.tar /
 WORKDIR /conway26GuiHtml-1.0/bin
 
 ## RUN apt-get update -y
