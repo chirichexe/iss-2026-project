@@ -3,6 +3,7 @@ import conway.io.IoJavalin;
 //import main.java.conway.devices.OutInWs;
 //import main.java.conway.domain.*;
 import unibo.basicomm23.utils.CommUtils;
+
 public class MainConwayGui  {
    	private IoJavalin server = new IoJavalin();
   	
