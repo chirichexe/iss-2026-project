@@ -27,13 +27,8 @@ public class IoJavalin implements IOutDev {
 	private GameController controller; 
 	
 	private WsMessageContext pageCtx ;
+	
 	public IoJavalin() {
-		
-		/* Aggiunto il 12/03/2026: Alloco "Life" e "LifeController" */
-		life = new Life(20, 20);
-		controller = new LifeController(life, this);
-		
-		
 		
         var app = Javalin.create(config -> {
 			config.staticFiles.add(staticFiles -> {
@@ -144,47 +139,38 @@ public class IoJavalin implements IOutDev {
                     
                     if( content.equals("ready")) { 
                     	pageCtx = ctx;  //memorizzo connessione pagina
-                    	displayGrid(life.getGrid());
+                    	if(life != null) displayGrid(life.getGrid());
                     } else if( content.equals("start")) { 
-                    	controller.onStart();
+                    	if(controller != null) controller.onStart();
                     } else if( content.equals("stop")) {
-                    	controller.onStop();
+                    	if(controller != null) controller.onStop();
                     } else if( content.equals("clear")) {
-                    	controller.onClear();
+                    	if(controller != null) controller.onClear();
                     } else if( content.contains("cell(")) { 
-                    	// cell(x,y)
+                    	// cella(x,y)
                     	String coords = content.replace("cell(", "").replace(")", "");
                     	String[] parts = coords.split(",");
 
                     	int x = Integer.parseInt(parts[0].trim());
                     	int y = Integer.parseInt(parts[1].trim());
                     	
-						controller.switchCellState(x, y);
+						if(controller != null) controller.switchCellState(x, y);
 
-						CommUtils.outmagenta("IoJavalin | switch cell (" + x + "," + y + ")");
+						CommUtils.outmagenta("IoJavalin | cambio stato cella (" + x + "," + y + ")");
                     } else {
-                    	ctx.send(content); // echo for unknown commands
+                    	ctx.send(content); // echo per comandi sconosciuti
                     }
                 }catch(Exception e) {
-                	CommUtils.outred("IoJavalin |  error:" + e.getMessage());
+                	CommUtils.outred("IoJavalin | errore:" + e.getMessage());
                 }               
             });
         });        
 	}
-	
- 
-	
 
-	
-	public static void main(String[] args) {
-		var resource = IoJavalin.class.getResource("/page");
-		CommUtils.outgreen("DEBUG: La cartella /page si trova in: " + resource);
-		new IoJavalin();
+	public void setup(LifeInterface life, GameController controller) {
+		this.life = life;
+		this.controller = controller;
 	}
-
-
-
-
 
 	@Override
 	public void display(String msg) {
@@ -193,14 +179,11 @@ public class IoJavalin implements IOutDev {
 		}
 	}
 
-
-
-
-
 	@Override
 	public void displayCell(IGrid grid, int x, int y) {
 		boolean alive = grid.getCellValue(x, y);
-		int color = alive ? 1 : 0; // 1=live, 0=dead (ripristinato come all'inizio)
+
+		int color = alive ? 1 : 0; // 1=viva, 0=morta
 		if (pageCtx != null) {
 			pageCtx.send("cell(" + x + "," + y + "," + color + ")");
 		}

@@ -36,31 +36,31 @@ wscontrol.js
 
  /*3*/socketToGui.onmessage = (event) => {
          console.log("initWS | onmessage:",event.data);
-		 if( event.data.startsWith("ID:")){
-			console.log("initWS | onmessage:",event.data);
-			pageId= event.data.split(":")[1];
-			addItem( "page ID="  + pageId ); 
+		 else if( event.data.startsWith("ID:")){
+		 	      console.log("initWS | onmessage:",event.data);
+		        pageId= event.data.split(":")[1];
+		        addItem( "ID pagina="  + pageId ); 
 		 }
 		 else if( event.data.startsWith("cell(")){ //deve ricevere da caller
-			 //addItem(event.data);
-			 coords = event.data.replace("cell(", "").replace(")","").split(",");
-			 //addItem(coords);
-			 updateCellColor(coords[0],coords[1],coords[2] )  //In iomap.js
+		         //addItem(event.data);
+		         coords = event.data.replace("cell(", "").replace(")","").split(",");
+		         //addItem(coords);
+		         updateCellColor(coords[0],coords[1],coords[2] )  //In iomap.js
 		 }else{/*
-	         if( event.data == "PING") {
-				socketToGui.send("PONG");
-			 }*/
-			 if( event.data != "PING") addItem( event.data );
+		 if( event.data == "PING") {
+		                socketToGui.send("PONG");
+		         }*/
+		         if( event.data != "PING") addItem( event.data );
 		 }
-	 }
-	 socketToGui.onclose =  function(event){	
+		 }
+		 socketToGui.onclose =  function(event){
 		 console.log("initWS | Chiusura connessione ", event);
-         addItem("initWS | Chiusura connessione ");
-         opened = false;
-	 }
- }//initWS
+		 addItem("initWS | Chiusura connessione ");
+		 opened = false;
+		 }
+		 }//initWS
 
- //addItem("Welcome to conwaygui ....");  
+		 //addItem("Benvenuti su conwaygui ....");  
   initWS()
    
  
