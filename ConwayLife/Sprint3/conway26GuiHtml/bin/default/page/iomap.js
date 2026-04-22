@@ -1,12 +1,11 @@
 /*
 iomap.js
-*/
-const ncell = 20;  //WARNING change in mapstyle.css
+const ncell = 20;  //ATTENZIONE: modificare anche in mapstyle.css
 
 const mapContainer = document.getElementById("map");  
 mapContainer.innerHTML = '';
-    
- 	
+
+
 function createMapRep(){
  for( let i=0; i<ncell; i++ ){
      for( let j=0; j<ncell; j++ ){
@@ -19,9 +18,10 @@ function createMapRep(){
             //alert(""+cellElement.id );
         });
         mapContainer.appendChild(cellElement);
-        //console.log("created cell", cellElement.id);
-}//for
-}//for
+        //console.log("cella creata", cellElement.id);
+}
+}
+}
 }//createMapRep
 
 

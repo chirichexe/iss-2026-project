@@ -1,0 +1,23 @@
+System sistemasqak
+
+Context ctxsistemas ip [ host= "127.0.0.1" port= 8010 ]
+
+//Dispatch eval : arg(V)
+
+QActor sistemas context ctxsistemas {
+
+	[#
+		fun eval(x: Double): String
+		{
+			val R = 3 * x
+			return "" + R
+		}	
+	#]
+
+	State s0 initial {
+		println("hello world")	color blue
+		[ #val V = eval(2) #]
+		println("result=v")	color blue
+	}
+	
+}
