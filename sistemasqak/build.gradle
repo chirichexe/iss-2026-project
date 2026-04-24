@@ -35,6 +35,7 @@ kotlin {
 
 ext {
     kotlinVersion = '1.9.22' 
+    coroutinesVersion = '1.8.1'
 }
 
 repositories {
@@ -61,9 +62,9 @@ dependencies {
 
     /* COROUTINES ******************************************************************************* */
     // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
-    implementation group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-core', version: "$kotlinVersion"   //, ext: 'pom'
+    implementation group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-core', version: "$coroutinesVersion"   //, ext: 'pom'
     // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core-jvm
-    implementation group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-core-jvm', version: "$kotlinVersion"
+    implementation group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-core-jvm', version: "$coroutinesVersion"
 
 
 	//HTTP
@@ -143,7 +144,7 @@ tasks.withType(Copy).configureEach {
 
 application {
     //Define the main class for the application.
-    mainClassName    = 'it.unibo.ctxsistemas.MainCtxsistemasKt'
+    mainClass    = 'it.unibo.ctxsistemas.MainCtxsistemasKt'
 }
  
  jar {
@@ -155,7 +156,7 @@ application {
       include '*.json'
     }
     manifest {
-        attributes 'Main-Class': "$mainClassName"
+        attributes 'Main-Class': 'it.unibo.ctxsistemas.MainCtxsistemasKt'
     }
 }
 
@@ -178,7 +179,7 @@ task run0(type: JavaExec) {
     group = "Execution"
     description = "Run the main class with JavaExecTask"
     classpath = sourceSets.main.runtimeClasspath
-    main = 'it.unibo.ctxsistemas.MainCtxsistemasKt'
+    mainClass = 'it.unibo.ctxsistemas.MainCtxsistemasKt'
 }
 
 /*

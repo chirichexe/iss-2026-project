@@ -16,7 +16,7 @@ QActor sistemas context ctxsistemas {
 
 	State s0 initial {
 		println("hello world")	color blue
-		[ #val V = eval(2) #]
+		[ #val V = eval(2.0) #]
 		println("result=v")	color blue
 	}
 	

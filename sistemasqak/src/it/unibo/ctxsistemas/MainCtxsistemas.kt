@@ -5,11 +5,11 @@ import it.unibo.kactor.sysUtil
 import kotlinx.coroutines.runBlocking
 
 fun main() = runBlocking {
-	//System.setProperty(org.slf4j.impl.SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "ERROR");
+	println("MainCtxsistemas starting ...")
 	QakContext.createContexts(
 	        "localhost", this, "sistemasqak.pl", "sysRules.pl", "ctxsistemas"
 	)
-	//JAN Facade
-	//JAN24 Display
+	println("MainCtxsistemas contexts created. Waiting ...")
+	kotlinx.coroutines.delay(5000)
 }
 

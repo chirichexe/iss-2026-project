@@ -39,7 +39,7 @@ class Sistemas ( name: String, scope: CoroutineScope, isconfined: Boolean=false,
 				state("s0") { //this:State
 					action { //it:State
 						CommUtils.outblue("hello world")
-						val V = eval(2)  
+						val V = eval(2.0)  
 						CommUtils.outblue("result=v")
 						//genTimer( actor, state )
 					}
