@@ -1,0 +1,71 @@
+System fireflysync
+
+Event syncronize : syncronize(TIME, FREQ)
+Dispatch cellstate : cellstate(X,Y,COLOR)
+
+Context ctxfireflies ip [host="localhost" port=8040 ]
+Context ctxgrid ip [host="127.0.0.1" port=8050]
+
+ExternalQActor griddisplay context ctxgrid
+
+QActor creator context ctxfireflies {
+	State s0 initial {
+		[#
+			//crea tre lucciole
+			for( i in 0..2 ){ 
+    			createActorDynamically( "firefly", "${i}", false)
+    		}
+			val Millis = System.currentTimeMillis()
+			val Timer = java.util.Random().nextLong(1000L,2000L)
+		#]
+		
+		// dopo 10s invia messaggio di sync globale
+		delay 10000
+		
+		emit syncronize: syncronize($Millis, $Timer)
+	}
+}
+
+QActor firefly context ctxfireflies dynamicOnly{
+	[#  
+		val X = name.split("firefly")[1].toInt()
+		val Y = 0
+		var Timer = java.util.Random().nextLong(1000L,2000L)  
+	#]
+
+	State s0 initial { }
+	Goto flash
+	
+	State flash {
+		println("$name | $Timer") color magenta
+		forward griddisplay -m cellstate: cellstate($X,$Y,1) // stato ON
+		
+		delayVar Timer
+		
+		forward griddisplay -m cellstate: cellstate($X,$Y,0) // stato OFF
+	}
+	
+	Transition t0
+		whenTimeVar Timer -> flash
+		whenEvent syncronize -> sync 
+	
+	State sync {
+		printCurrentMessage color magenta
+		onMsg(syncronize: syncronize(TIME, FREQ)){
+			[#
+				val time = payloadArg(0).toLong()
+				val now  = System.currentTimeMillis()
+				
+				// riallineamento: stessa fase temporale per tutti
+				val Wait = (1000 - ((now - time) % 1000))
+			#]
+			delayVar Wait
+			[# 
+				// stesso periodo per tutti per lampeggio sincronizzato
+				Timer = payloadArg(1).toLong() 
+			#]
+		}
+	}
+	
+	Goto flash
+}
