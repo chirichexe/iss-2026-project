@@ -16,31 +16,36 @@ QActor creator context ctxfireflies {
     			createActorDynamically( "firefly", "${i}", false)
     		}
 			val Millis = System.currentTimeMillis()
-			val Timer = java.util.Random().nextLong(1000L,2000L)
+			val blinkTimer = java.util.Random().nextLong(1000L,2000L)
 		#]
 		
-		// dopo 10s invia messaggio di sync globale
+		// dopo 10s invia messaggio di sinconizzazione globale
 		delay 10000
 		
-		emit syncronize: syncronize($Millis, $Timer)
+		emit syncronize: syncronize($Millis, $blinkTimer)
 	}
 }
 
 QActor firefly context ctxfireflies dynamicOnly{
 	[#  
-		val X = name.split("firefly")[1].toInt()
-		val Y = 0
-		var Timer = java.util.Random().nextLong(1000L,2000L)  
+		val id = name.split("firefly")[1].toInt()
+
+		// definizioe posizioni delle lucciole 
+		val X = id % 2
+		val Y = id / 2
+
+		var blinkTimer = java.util.Random().nextLong(1000L,2000L)  
 	#]
 
 	State s0 initial { }
+	
 	Goto flash
 	
 	State flash {
-		println("$name | $Timer") color magenta
+		println("$name | $blinkTimer") color magenta
 		forward griddisplay -m cellstate: cellstate($X,$Y,1) // stato ON
 		
-		delayVar Timer
+		delayVar Timer // aspetta il suo tempo...
 		
 		forward griddisplay -m cellstate: cellstate($X,$Y,0) // stato OFF
 	}
@@ -56,13 +61,13 @@ QActor firefly context ctxfireflies dynamicOnly{
 				val time = payloadArg(0).toLong()
 				val now  = System.currentTimeMillis()
 				
-				// riallineamento: stessa fase temporale per tutti
+				// stessa fase temporale per tutti
 				val Wait = (1000 - ((now - time) % 1000))
 			#]
 			delayVar Wait
 			[# 
 				// stesso periodo per tutti per lampeggio sincronizzato
-				Timer = payloadArg(1).toLong() 
+				blinkTimer = payloadArg(1).toLong() 
 			#]
 		}
 	}

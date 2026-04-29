@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+
+<link rel="stylesheet" type="text/css" href="css/mystyle.css">
+<!--
+    <script type="text/javascript" src="../css/issStyle.js"></script>
+-->
+    
+</head>
+<title>Firefly project</title>
+ 
+<body>
+<div id="top">
+<h1>Firefly project: Task A</h1>
+</div>  
+
+<div class="body">  
+
+<h2>Introduction</h2>
+<b>Goal</b>: Realizzazione in QAK di un <a href="https://anatali.github.io/issLab2026/_static/docs/Protobook.pdf#chapter.24">sistema</a> costituito da 3 lucciole le quali:
+<ul>
+    <li>Si accendono e si spengono con frequenza costante</li>
+    <li>Dopo 10 secondi le lucciole lampeggiano in modo sincronizzato</li>
+</ul>
+
+<h2>Requirements</h2>
+
+<!-- <div class="remark"> -->
+<pre>
+R1)  Realizzare un sistema software che simuli 3 <b>lucciole</b> su una <b>griglia</b>. 
+
+R2)  Ogni lucciola lampeggia (cioè si accende e si spegne) con una frequenza costante, eventualmente diversa per ciascuna lucciola. 
+
+R3)  Il sistema deve garantire la transizione automatica al lampeggio sincronizzato dopo 10 secondi dall'avvio del sistema.
+
+</pre>
+  
+<h2>Requirement analysis</h2>
+<ul>
+    <li>
+        All'interno del sistema le lucciole devono essere rappresentate da attori che lampeggiano con intervalli di tempo inizialmente variabili
+    </li>
+    <li>
+        Il comportamento di una lucciola è caratterizzato da una posizione (X,Y) sulla griglia, un timer interno e un ciclo di accensione e spegnimento
+    </li>
+</ul>    
+
+
+</code></pre>
+
+
+<h2>Problem analysis</h2>
+
+Il ciclo di una lucciola può essere modellato come uno stato che alterna acceso/spento con un tempo variabile.
+
+<pre><code>
+	State flash {
+		forward griddisplay -m cellstate: cellstate($X,$Y,1) // stato ON
+		delayVar Timer // aspetta il suo tempo...
+		forward griddisplay -m cellstate: cellstate($X,$Y,0) // stato OFF
+	}
+</code></pre>
+
+La ripetizione del ciclo è gestita da una transizione temporale:
+
+<pre><code>
+Transition t0
+whenTimeVar Timer -> flash    
+</code>
+</pre>
+
+Mediante la "sincronizzazione" introduciamo un evento globale e un riallineamento temporale basato su un tempo di riferimento comune
+
+<pre><code>
+Event syncronize : syncronize(TIME, FREQ)
+</code>
+</pre>
+
+Ogni attore, alla ricezione dell'evento syncronize, modifica il proprio periodo adottando un valore comune e riallinea la propria fase temporale rispetto a un tempo globale.
+
+<h2>Test plans</h2> 
+<ul>
+    <li>
+        Si verifichi che ogni lucciola alterni stato ON/OFF con un periodo inizialmente diverso tra le lucciole
+    </li>
+    <li>
+        Si verifichi che dopo 10 secondi venga emesso l'evento syncronize
+    </li>
+    <li>
+        Si verifichi che dopo la sincronizzazione le lucciole lampeggino in modo allineato
+    </li>
+</ul>
+
+<h2>Project</h2> 
+
+Per la visualizzazione dello stato delle lucciole si sfrutta l'attore griddisplay (un servizio separato dedicato alla visualizzazione della griglia) che riceve messaggi di aggiornamento e rappresenta una griglia.
+
+<pre>
+<code>
+Dispatch cellstate : cellstate(X,Y,COLOR)
+</code>
+</pre>
+
+Ogni lucciola invia un messaggio quando cambia stato:
+
+<pre>
+<code>
+forward griddisplay -m cellstate: cellstate(X,Y,1)
+forward griddisplay -m cellstate: cellstate(X,Y,0)
+</code>
+</pre>
+
+Per gestire avvio e sincronizzazione si introduce un attore "creator" che crea le lucciole e invia l'evento di sincronizzazione dopo 10 secondi
+
+<pre>
+<code>
+QActor creator {
+    State s0 initial {
+        createActorDynamically(...)
+        delay 10000
+        emit syncronize
+    }
+}
+</code>
+</pre>
+
+<h2>Testing</h2> 
+ 
+<h2>Deployment</h2> 
+ 
+<h2>Maintenance</h2> 
+ 
+<!-- USEFUL
+<table style="width:100%" border="1">
+<tr>
+<td style="width:50%">
+</td>
+<td></td>
+</tr>
+</table>
+-->
+	      	
+<br/><br/> 	
+</div>  
+
+<div style="background-color:rgba(86, 56, 253, 0.9); width:60%;text-align:left;color:white">
+By Davide Chirichella email: davide,chirichella@studio.unibo.it, 
+<!-- <img src="./img/mbot-S.jpg" alt="mbot" width="15%" height="15%"> -->
+<img src="./img/emiglio.png" alt="emiglio" width="15%" height="15%">
+GIT repo: https://github.com/chirichexe/iss-2026-project 
+</div> 
+</body>
+</html>

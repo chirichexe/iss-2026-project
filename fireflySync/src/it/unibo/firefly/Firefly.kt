@@ -30,8 +30,12 @@ class Firefly ( name: String, scope: CoroutineScope, isconfined: Boolean=false, 
 		//val interruptedStateTransitions = mutableListOf<Transition>()
 		//IF actor.withobj !== null val actor.withobj.name� = actor.withobj.method�ENDIF
 		  
-				val X = name.split("firefly")[1].toInt()
-				val Y = 0
+				val id = name.split("firefly")[1].toInt()
+		
+				// definizioe posizioni delle lucciole 
+				val X = id % 2
+				val Y = id / 2
+		
 				var Timer = java.util.Random().nextLong(1000L,2000L)  
 		return { //this:ActionBasciFsm
 				state("s0") { //this:State
