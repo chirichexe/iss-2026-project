@@ -73,7 +73,7 @@ class Firefly ( name: String, scope: CoroutineScope, isconfined: Boolean=false, 
 												val time = payloadArg(0).toLong()
 												val now  = System.currentTimeMillis()
 												
-												// riallineamento: stessa fase temporale per tutti
+												// stessa fase temporale per tutti
 												val Wait = (1000 - ((now - time) % 1000))
 								delay(Wait)
 								 
