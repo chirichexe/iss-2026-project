@@ -1,0 +1,76 @@
+Per superare l' "accoppiamento forte" di firefly con "ExternalQ actor griddisplay context", ma quale informazione invia? invia informazione alle lucciole vicine. Due modi
+
+1. Dispatch:  
+2. Eventi: 
+
+Obiettivo: vorrei emettere un evento percepito soltanto dalle vicine in Qak.
+
+https://github.com/anatali/issLab2026/blob/main/qakdemo26/src/demoasktocaller.qaktt
+
+https://github.com/anatali/issLab2026/blob/main/qakdemo26/src/demostreams.qaktt
+
+emitlocalstream
+
+
+Sono interessato agli eventi "data" inviati dalla source
+
+------------------------------------------------------------------------------
+
+ANALISI DEI REQUISITI: tentatvo di formalizzare requisiti espressi in linguaggio naturale
+
+FORMALIZZARE IL CONCETTO DI STANZA
+
+Unità di misura: il robot, diventa la misura di "tutte le cose"
+
+FORMALIZZARE IL CONCETTO DI RADAR
+
+- variabile
+- funzione
+- pojo
+- thread
+- actor
+
+Quaktor radar
+
+- analizza ciò che c'è in un certo range 
+- informa al resto del sistema la presenza di qualcosa
+
+Ci interessa di catturare formalmente la proprietà che è utile ai fini del sistema da realizzare
+
+NO API / NO STATI / il BIP che vediamo nel tabellone è la rappresentazione del fatto che il radar ha rilevato un oggetto nel suo campo visivo. 
+L'INFORMAZIONE che mi interessa (l'unica che può darmi) è la distanza rilevata. DOmanda: come fa l'informazioe ad "uscire" dalla "pancia" del radar
+e uscire? Cosa faccio?
+
+3 modi di rappresentare l'interazione
+
+- event
+- ...
+
+EVENTO = modello
+
+msg = radar
+payload = ( d , la distanza -  )
+
+event radar : distance ( D -  ) // distanza in metri
+
+FORMALIZZIAMO L'ULTIMA ENTITA DEL SISTEMA: IL DDR
+
+-----------------------------------informazione
+# Build immagine
+ docker build -f Dockerfile -t virtualrobotdisi26:1.0 .
+ 
+ # Avvio container (detach)
+ docker run -d -p 8090:8090 -p 8091:8091 --rm --name virtualrobot26 virtualrobotdisi26:1.0
+ 
+ # Verifica container attivo
+ docker ps --filter name=virtualrobot26
+ 
+ # Verifica endpoint
+ curl -I http://localhost:8090
+ curl -I http://localhost:8091
+ 
+ # Log container
+ docker logs -f virtualrobot26
+ 
+ # Stop container
+ docker stop virtualrobot26
