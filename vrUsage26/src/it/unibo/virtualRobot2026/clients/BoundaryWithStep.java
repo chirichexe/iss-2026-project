@@ -8,7 +8,7 @@
  * Notare i threads
  */
 
-package appls;
+package it.unibo.virtualRobot2026.clients;
  
 import robots.RobotObj26;
 import unibo.basicomm23.interfaces.IApplMessage;
@@ -16,40 +16,32 @@ import unibo.basicomm23.interfaces.IObserverMsg;
 import unibo.basicomm23.utils.CommUtils;
 import unibo.basicomm23.utils.LogUtils;
   
-public class BoundaryWithStep implements IObserverMsg { 
+public class BoundaryWithStep implements IObserverMsg { //implements IObserverMsg
     private RobotObj26 robot;
 	private int n = 0;
     private String logFName = "vrusage26.log"; //see logback.xml
-     private int stepTime = 345;   //sonar at 0.19
+    private int stepTime = 345;   //sonar at 0.19
     private LogUtils log  = new LogUtils("bstep");
- 
+    private volatile boolean stopForSonar = false; //ADD
+
     public BoundaryWithStep(String addr) {
         CommUtils.outblue("TestMovesUsingWs |  CREATING ..." + addr);  
-        robot = RobotObj26.create(addr, null,logFName);
-        //robot.setTrace(true);
+        
+        robot = RobotObj26.create(addr, this, logFName); // passo this
+        
+        robot.setTrace(true);
+        
         log.clearlog("logs/"+logFName);
         CommUtils.aboutThreads("main");
     }
     
-	@Override
-	public void update(IApplMessage msg) {
-		// TODO Auto-generated method stub
-		CommUtils.outcyan("qewhvwkbejgjfew");
-	}
-
-    
     //Basato su step sincorno. Molto più semplice ....
     public void doJob() throws Exception {
-    	askUser();
+    	//askUser();
     	robot.halt();
      	while( n < 4 ) {
     		walk();
     		CommUtils.outblue("turning");
-    		
-    		//if (  ) {
-    			
-    		//}
-    		
 			log.info("turned when n="+n);
 			robot.turnLeft();
     		n++;
@@ -57,8 +49,11 @@ public class BoundaryWithStep implements IObserverMsg {
      }
      
     protected void walk() throws Exception{
-       	boolean r = robot.step(stepTime);
-       	while( r ) {
+        stopForSonar = false; //reset flag prima di iniziare a camminare
+       	
+        boolean r = robot.step(stepTime);
+       	
+       	while( r && !stopForSonar ) { //controllo flag sonar
        		r = robot.step(stepTime);
        	}
     }
@@ -80,10 +75,26 @@ MAIN
         }
     }
 
-
- 
- 
-
+ @Override
+ public void update(IApplMessage msg) { 
+	 
+    if (msg.msgId().equals("sonardata")) {
+    	CommUtils.aboutThreads("update");
+    	CommUtils.delay(1000);
+    	/*
+    	
+        try {
+            int distance = Integer.parseInt(msg.msgContent().replaceAll("[^0-9]", ""));
+            if (distance < 25 ) { //distanza
+                CommUtils.outred("!!! SONAR DETECTION: " + distance + " - STOPPING !!!");
+                stopForSonar = true; 
+                robot.halt(); 
+            }
+        } catch (Exception e) {
+            CommUtils.outred("Update error: " + e.getMessage());
+        }
+    	 * */
+    }
+ }
 
 }
-

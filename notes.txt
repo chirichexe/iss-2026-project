@@ -87,3 +87,21 @@ FORMALIZZIAMO L'ULTIMA ENTITA DEL SISTEMA: IL DDR
 
 Da mandare la proposta di progetto di un sistema che trovi a pag 262 - alla buona volontà di chi si vuole cimentare. In linguaggio naturale NON LI APRE NEANCHE
 
+
+public class BoundaryWalkNaiveUsingWs26 implements IObserver{ // java esprime che è un observer
+
+----
+
+Fare in modo che si ferma per 2 sec. quando arriva in corrispondenza al sonar
+
+1. implementare l'itnerfaccia observer
+2. verifico che i messaggi arrivano (gayser)
+3.
+
+
+Vogliamo sostituire al robot POJO un servizio in modo che, mentre ora dbbiamo per forza creare un'istanza nell'applicazione, una volta che creiamo un servizio 
+possiamo invocare quello
+
+basta fare una specializzazione dell'oggetto: passiamo da un observer classico a un observer nel distribuito che lavora a messaggi invece che lavorare a ...
+
+

@@ -23,6 +23,7 @@ import java.util.Observable;
 
 @ClientEndpoint
 public class BoundaryWalkNaiveUsingWs26 implements IObserver{
+	
     private Session userSession      = null;
     private  JSONParser simpleparser = new JSONParser();
     private long startTime;
