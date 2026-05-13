@@ -27,3 +27,7 @@ usando una pagina HTML come dispositivo di I/O. <i>Distribuzione</i>: Docker yam
 ### Sistema Firefly
 
 * [Firefly Sprint1](Firefly/Sprint1): primo prototipo del sistema
+
+### Sistema VirtualRobot
+
+* [VirtualRobot Sprint1](VirtualRobot/Sprint1): primo prototipo del sistema

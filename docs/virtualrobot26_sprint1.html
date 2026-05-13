@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="css/mystyle.css">
+<!--
+    <script type="text/javascript" src="../css/issStyle.js"></script>
+-->
+    
+</head>
+<title>virtualrobot sprint1</title>
+</head>
+
+<body>
+<div id="top">
+<h1>VirtualRobot Sprint1</h1>
+</div>  
+
+<div class="body">  
+
+<h2>Introduction</h2>
+Realizzazione in Java del
+<a href='https://anatali.github.io/issLab2026/_static/docs/Protobook.pdf#chapter.25'>VIRTUAL ROBOT</a>
+
+<h2>Requirements</h2>
+
+<pre>
+Costruire un sistema software che comanda un Differential Drive Robot (DDR) in modo che, 
+partendo dalla posizione iniziale HOME, il robot si sposti lungo il perimetro di una stanza rettangolare vuota. 
+Il DDR si deve fermare quando tornato in HOME.
+
+Il DDR è anche sensibile ai dati rilevati da un Radar.
+Quando il Radar rileva un 'intruso' a una distanza minore di una distanza prefissata ``DMIN``:
+  <ul>
+    <li> se il DDR si sta muovendo , il DDR si ferma fino a che il Radar non rileva più un 'intruso' così vicino </li>
+    <li> se il DDR è fermo in HOME, il DDR ruota su sè stesso fino a che un 'intruso' così vicino scompare </li>
+
+  </ul>
+</pre>
+
+<h2>Requirement analysis</h2>
+<pre>
+
+Il robot deve essere rappresentato da un attore che esegue il movimento lungo il perimetro della stanza.
+
+Il Radar deve essere rappresentato da un attore che osserva l'ambiente ed è in grado di segnalare la presenza di un intruso vicino
+
+Si utilizza il linguaggio qak per la rappresentazione del modello del sistema
+
+
+<code>
+    System ddrroom
+
+    Event obstacle : obstacle(DIST) // il radar ha rilevato un ostacolo a distanza DIST< DMIN
+    Event free : free() // non ci sono più ostacoli entro DMIN
+
+    Context ctxroom ip [host="localhost" port=8050]
+
+    QActor ddr context ctxroom {
+        State home initial {
+            // il robot si trova nella posizione HOME
+            // in attesa dell'avvio
+        }
+        
+        State moving {
+            // il robot percorre il perimetro della stanza
+        }
+        
+        State stopped {
+            // il robot è fermo per presenza intruso
+        }
+        
+        State rotating {
+            // il robot ruota su sé stesso
+        }
+    }
+
+    QActor radar context ctxroom {
+
+        State sensing initial {
+            // monitoraggio ambiente
+        }
+    }
+</code>
+
+Il comportamento del sistema è caratterizzato da:
+
+<ul>
+    <li> una risorsa esterna che realizza i movimenti reali</li>
+    <li> acquisizione asincrona dei dati sonar</li>
+</ul>
+
+reazione agli ostacoli rilevati
+
+Il robot deve:
+
+<ul>
+    <li>partire da HOME</li>
+    <li>percorrere il perimetro della stanza</li>
+    <li>arrestarsi quando ritorna in HOME</li>
+</ul>
+
+Il sonar/radar deve:
+
+<ul>
+<li>rilevare ostacoli entro DMIN</li>
+<li>produrre eventi relativi alla distanza rilevata</li>
+</ul>
+
+</pre>
+
+<h2>Problem analysis</h2>
+<pre>
+</pre>
+
+<h2>Test plans</h2>
+<pre>
+</pre>
+
+<h2>Project</h2> 
+
+<pre>
+</pre>
+
+<h2>Testing</h2> 
+<pre>
+</pre>
+
+<h2>Deployment</h2> 
+<pre>
+
+</pre>
+
+<h2>Maintenance</h2> 
+<pre></pre>
+
+<!-- USEFUL
+<table style="width:100%" border="1">
+<tr>
+<td style="width:50%">
+</td>
+<td></td>
+</tr>
+</table>
+-->
+
+<br/><br/> 	
+</div>  
+
+<div style="background-color:rgba(86, 56, 253, 0.9); width:60%;text-align:left;color:white">
+By Davide Chirichella email: davide.chirichella@studio.unibo.it, 
+<!-- <img src="./img/mbot-S.jpg" alt="mbot" width="15%" height="15%"> -->
+<img src="./img/emiglio.png" alt="emiglio" width="15%" height="15%">
+https://github.com/chirichexe/iss-2026-project 
+</div> 
+</body>
+</html>
